@@ -1,3 +1,4 @@
+//type
 export enum tType {
     num,
     identify,
@@ -9,30 +10,37 @@ export enum tType {
     binary
 
 }
+//keywords
 const keywords:Record<string,tType>={
     "let":tType.let,
     "force":tType.force
 }
+//token
 export interface token{
     val:string,
     type:tType
 }
+//returns the value and type of the token
 function token(val:string,type:tType):token{
 
     return {val,type}
 }
+//sees if what u wrote is a int
 function isint(src:string):boolean{
     const c=src.charCodeAt(0)
     const bound=['0'.charCodeAt(0),'9'.charCodeAt(0)]
     return (c>=bound[0]&&c<=bound[1])
 }
+//sees if what u wrote is a char
 function isalpha(src:string):boolean{
     const thing:boolean=src.toUpperCase()!=src.toLowerCase()
     return thing
 }
+//sees if the compiler can skip what u wrote
 function skip(src:string){
     return (src in [" ","\n","\t"])
 }
+//tokenizes everything
 export function tokenize(code:string):token[]{
     const tokens=new Array<token>()
     const src=code.split("")

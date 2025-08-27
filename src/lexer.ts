@@ -9,6 +9,10 @@ export enum tType {
     binary
 
 }
+const keywords:Record<string,tType>={
+    "let":tType.let,
+    "force":tType.force
+}
 export interface token{
     val:string,
     type:tType
@@ -25,6 +29,9 @@ function isint(src:string):boolean{
 function isalpha(src:string):boolean{
     const thing:boolean=src.toUpperCase()!=src.toLowerCase()
     return thing
+}
+function skip(src:string){
+    return (src in [" ","\n","\t"])
 }
 export function tokenize(code:string):token[]{
     const tokens=new Array<token>()
@@ -59,7 +66,13 @@ export function tokenize(code:string):token[]{
                     while(src.length>0&&isalpha(src[0])){
                         ident+=src.shift()
                     }
-                    tokens.push(token(ident,tType.identify))
+                    const kw=keywords[ident]
+                    if(kw==undefined){
+                        tokens.push(token(ident,tType.identify))
+                    }
+                    else{
+                        tokens.push(token(ident,kw))
+                    }
                 }
         }
     }

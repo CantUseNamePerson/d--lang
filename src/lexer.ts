@@ -77,6 +77,10 @@ export function tokenize(code:string):token[]{
                 if(skip(src[0])){
                     src.shift()
                 }
+                else{
+                    console.log("found unknown code at: "+src[0]);
+                    process.exit(1)
+                }
         }
     }
     return tokens

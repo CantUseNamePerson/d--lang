@@ -55,11 +55,11 @@ export function tokenize(code:string):token[]{
                     tokens.push(token(num,tType.num))
                 }
                 if(isalpha(src[0])){
-                    let num=""
+                    let ident=""
                     while(src.length>0&&isalpha(src[0])){
-                        num+=src.shift()
+                        ident+=src.shift()
                     }
-                    tokens.push(token(num,tType.num))
+                    tokens.push(token(ident,tType.identify))
                 }
         }
     }

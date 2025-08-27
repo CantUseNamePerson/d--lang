@@ -93,7 +93,7 @@ export function tokenize(code:string):token[]{
     }
     return tokens
 }
-const code=await Deno.readTextFile("./test")
-for (let i of tokenize(code)) {
-    console.log(token);
+const code=await Deno.readTextFile("D:/Programming/dmm/src/test_file")
+for (const i of tokenize(code)) {
+    console.log(i);
 }

@@ -74,6 +74,9 @@ export function tokenize(code:string):token[]{
                         tokens.push(token(ident,kw))
                     }
                 }
+                if(skip(src[0])){
+                    src.shift()
+                }
         }
     }
     return tokens

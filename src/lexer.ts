@@ -87,9 +87,13 @@ export function tokenize(code:string):token[]{
                 }
                 else{
                     console.log("found unknown code at: "+src[0]);
-                    process.exit(1)
+                    Deno.exit(1)
                 }
         }
     }
     return tokens
+}
+const code=await Deno.readTextFile("./test")
+for (let i of tokenize(code)) {
+    console.log(token);
 }

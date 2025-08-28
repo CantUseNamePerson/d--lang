@@ -81,7 +81,7 @@ export function tokenize(code:string):token[]{
                         tokens.push(token(ident,kw))
                     }
                 }
-                else if(src[0]==' '||src[0]=='\n'||src[0]=='\t'){
+                else if(src[0]==' '||src[0]=='\r'||src[0]=='\t'){
                     src.shift()
                 }
                 else{

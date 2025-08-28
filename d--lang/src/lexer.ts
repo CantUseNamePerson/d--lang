@@ -36,10 +36,6 @@ function isalpha(src:string):boolean{
     const thing:boolean=src.toUpperCase()!=src.toLowerCase()
     return thing
 }
-//sees if the compiler can skip what u wrote
-function skip(src:string){
-    return (src in [" ","\n","\t"])
-}
 //tokenizes everything
 export function tokenize(code:string):token[]{
     const tokens=new Array<token>()
@@ -69,7 +65,7 @@ export function tokenize(code:string):token[]{
                     }
                     tokens.push(token(num,tType.num))
                 }
-                if(isalpha(src[0])){
+                else if(isalpha(src[0])){
                     let ident=""
                     while(src.length>0&&isalpha(src[0])){
                         ident+=src.shift()
@@ -82,18 +78,19 @@ export function tokenize(code:string):token[]{
                         tokens.push(token(ident,kw))
                     }
                 }
-                if(skip(src[0])){
+                else if(src[0]==' '||src[0]=='\n'||src[0]=='\t'){
                     src.shift()
                 }
                 else{
                     console.log("found unknown code at: "+src[0]);
+                    console.log("Char code:", src[0].charCodeAt(0));
                     Deno.exit(1)
                 }
         }
     }
     return tokens
 }
-const code=await Deno.readTextFile("D:/Programming/dmm/src/test_file")
+const code=await Deno.readTextFile("./test_file.txt")
 for (const i of tokenize(code)) {
     console.log(i);
 }

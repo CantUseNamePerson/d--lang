@@ -50,33 +50,34 @@ function isalpha(src:string):boolean{
 export function tokenize(code:string):token[]{
     const tokens=new Array<token>()
     const src=code.split("")
-    while(src.length>0){
-        if(oneCharTokens[src[0]]){
-            const shit=src.shift()!
+    const firs=src[0]
+    const shit=src.shift()!
+    const len=src.length
+    while(len>0){
+        if(oneCharTokens[firs])
             tokens.push(token(shit,oneCharTokens[shit]))
-        }
         else{
-            if(isint(src[0])){
+            if(isint(firs)){
                 let num=""
-                while(src.length>0&&isint(src[0]))
-                    num+=src.shift()
+                while(src.length>0&&isint(firs))
+                    num+=shit
                 tokens.push(token(num,tType.num))
             }
-            else if(isalpha(src[0])){
+            else if(isalpha(firs)){
                 let ident=""
-                while(src.length>0&&isalpha(src[0]))
-                    ident+=src.shift()
+                while(len>0&&isalpha(firs))
+                    ident+=shit
                 const kw=keywords[ident]
                 if(kw==undefined)
                     tokens.push(token(ident,tType.identify))
                 else
                     tokens.push(token(ident,kw))
             }
-            else if(src[0]==' '||src[0]=='\r'||src[0]=='\t')
-                src.shift()
+            else if(firs==' '||firs=='\r'||firs=='\t')
+                shit
             else{
-                console.log("found unknown code at: "+src[0])
-                console.log("Char code:", src[0].charCodeAt(0))
+                console.log("found unknown code at: "+firs)
+                console.log("Char code:", firs.charCodeAt(0))
                 Deno.exit(1)
             }
         }

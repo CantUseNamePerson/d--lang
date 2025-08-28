@@ -22,7 +22,6 @@ export interface token{
 }
 //returns the value and type of the token
 function token(val:string,type:tType):token{
-
     return {val,type}
 }
 //sees if what u wrote is a int
@@ -63,23 +62,19 @@ export function tokenize(code:string):token[]{
             default:
                 if(isint(src[0])){
                     let num=""
-                    while(src.length>0&&isint(src[0])){
+                    while(src.length>0&&isint(src[0]))
                         num+=src.shift()
-                    }
                     tokens.push(token(num,tType.num))
                 }
                 else if(isalpha(src[0])){
                     let ident=""
-                    while(src.length>0&&isalpha(src[0])){
+                    while(src.length>0&&isalpha(src[0]))
                         ident+=src.shift()
-                    }
                     const kw=keywords[ident]
-                    if(kw==undefined){
+                    if(kw==undefined)
                         tokens.push(token(ident,tType.identify))
-                    }
-                    else{
+                    else
                         tokens.push(token(ident,kw))
-                    }
                 }
                 else if(src[0]==' '||src[0]=='\r'||src[0]=='\t'){
                     src.shift()
@@ -94,6 +89,5 @@ export function tokenize(code:string):token[]{
     return tokens
 }
 const code=await Deno.readTextFile("./test_file.txt")
-for (const i of tokenize(code)) {
+for (const i of tokenize(code))
     console.log(i);
-}

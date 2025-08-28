@@ -1,2 +1,3 @@
 let x=10
 force c=90
+foo nigger=asd

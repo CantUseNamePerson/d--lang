@@ -7,8 +7,8 @@ export enum tType {
     closeParen,
     let,
     force,
-    binary
-
+    binary,
+    enter
 }
 //keywords
 const keywords:Record<string,tType>={
@@ -56,6 +56,9 @@ export function tokenize(code:string):token[]{
                 break
             case '=':
                 tokens.push(token(src.shift()!,tType.equal))
+                break
+            case '\n':
+                tokens.push(token(src.shift()!,tType.enter))
                 break
             default:
                 if(isint(src[0])){

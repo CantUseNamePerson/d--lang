@@ -41,34 +41,33 @@ const isalpha=(c:string)=>(c.toUpperCase()!=c.toLowerCase())
 export function tokenize(code:string):token[]{
     const tokens=new Array<token>()
     const src=code.split("")
-    const firs=src[0]
-    const shit=src.shift()!
-    const len=src.length
-    while(len>0){
-        if(oneCharTokens[firs])
-            tokens.push(token(shit,oneCharTokens[shit]))
+    while(src.length>0){
+        if(oneCharTokens[src[0]]){
+            const ch=src.shift()!;
+            tokens.push(token(ch,oneCharTokens[ch]));
+        }
         else{
-            if(isint(firs)){
+            if(isint(src[0])){
                 let num=""
-                while(src.length>0&&isint(firs))
-                    num+=shit
+                while(src.length>0&&isint(src[0]))
+                    num+=src.shift()!
                 tokens.push(token(num,tType.num))
             }
-            else if(isalpha(firs)){
+            else if(isalpha(src[0])){
                 let ident=""
-                while(len>0&&isalpha(firs))
-                    ident+=shit
+                while(src.length>0&&isalpha(src[0]))
+                    ident+=src.shift()!
                 const kw=keywords[ident]
                 if(kw==undefined)
                     tokens.push(token(ident,tType.identify))
                 else
                     tokens.push(token(ident,kw))
             }
-            else if(firs==' '||firs=='\r'||firs=='\t')
-                shit
+            else if(src[0]==' '||src[0]=='\r'||src[0]=='\t')
+                src.shift()!
             else{
-                console.log("found unknown code at: "+firs)
-                console.log("Char code:", firs.charCodeAt(0))
+                console.log("found unknown code at: "+src[0])
+                console.log("Char code:", src[0].charCodeAt(0))
                 Deno.exit(1)
             }
         }

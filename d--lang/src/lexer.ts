@@ -32,20 +32,11 @@ export interface token{
     type:tType
 }
 //returns the value and type of the token
-function token(val:string,type:tType):token{
-    return {val,type}
-}
+const token=(val:string,type:tType):token=>({ val, type })
 //sees if what u wrote is a int
-function isint(src:string):boolean{
-    const c=src.charCodeAt(0)
-    const bound=['0'.charCodeAt(0),'9'.charCodeAt(0)]
-    return (c>=bound[0]&&c<=bound[1])
-}
+const isint=(c:string)=>c>='0'&&c<='9'
 //sees if what u wrote is a char
-function isalpha(src:string):boolean{
-    const thing:boolean=src.toUpperCase()!=src.toLowerCase()
-    return thing
-}
+const isalpha=(c:string)=>(c.toUpperCase()!=c.toLowerCase())
 //tokenizes everything
 export function tokenize(code:string):token[]{
     const tokens=new Array<token>()

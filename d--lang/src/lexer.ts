@@ -8,7 +8,7 @@ export enum tType {
     let,
     force,
     binary,
-    enter
+    eof
 }
 //keywords
 const keywords:Record<string,tType>={
@@ -24,7 +24,6 @@ const oneCharTokens:Record<string,tType>={
     '*':tType.binary,
     '/':tType.binary,
     '=':tType.equal,
-    '\n':tType.enter,
 };
 //token
 export interface token{
@@ -63,7 +62,7 @@ export function tokenize(code:string):token[]{
                 else
                     tokens.push(token(ident,kw))
             }
-            else if(src[0]==' '||src[0]=='\r'||src[0]=='\t')
+            else if(src[0]==' '||src[0]=='\r'||src[0]=='\t'||src[0]=='\n')
                 src.shift()!
             else{
                 console.log("found unknown code at: "+src[0])
@@ -72,6 +71,7 @@ export function tokenize(code:string):token[]{
             }
         }
     }
+    token.push({type:tType.eof,val:"fileEnd"})
     return tokens
 }
 //test thing
